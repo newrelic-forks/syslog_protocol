@@ -7,7 +7,7 @@ module SyslogProtocol
       assemble
     end
 
-    def assemble(max_size = 1024)
+    def assemble(max_size = 1023)
       unless @hostname and @facility and @severity and @tag
         raise "Could not assemble packet without hostname, tag, facility, and severity"
       end
@@ -20,7 +20,7 @@ module SyslogProtocol
         end
       end
 
-      data
+      "#{data}\n"
     end
 
     def facility=(f)
@@ -110,12 +110,7 @@ module SyslogProtocol
     end
 
     def generate_timestamp
-      time = @time || Time.now
-      # The timestamp format requires that a day with fewer than 2 digits have
-      # what would normally be a preceding zero, be instead an extra space.
-      day = time.strftime("%d")
-      day = day.sub(/^0/, ' ') if day =~ /^0\d/
-      time.strftime("%b #{day} %H:%M:%S")
+      time = @time || Time.now.xmlschema
     end
 
     if "".respond_to?(:bytesize)
