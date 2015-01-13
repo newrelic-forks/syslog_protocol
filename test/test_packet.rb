@@ -75,13 +75,9 @@ describe "a syslog packet" do
     @p.content.should.equal "exploring ze black hole"
   end
 
-  it "timestamp must conform to the retarded format" do
-    @p.generate_timestamp.should.match /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\s|[1-9])\d\s\d\d:\d\d:\d\d/
-  end
-
   it "use the current time and assemble the packet" do
     timestamp = @p.generate_timestamp
-    @p.to_s.should.equal "<165>#{timestamp} space_station test: exploring ze black hole"
+    @p.to_s.should.equal "<165>#{timestamp} space_station test: exploring ze black hole\n"
   end
 
   it "packets larger than 1024 will be truncated" do
