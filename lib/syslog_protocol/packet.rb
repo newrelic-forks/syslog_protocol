@@ -110,12 +110,7 @@ module SyslogProtocol
     end
 
     def generate_timestamp
-      time = @time || Time.now
-      # The timestamp format requires that a day with fewer than 2 digits have
-      # what would normally be a preceding zero, be instead an extra space.
-      day = time.strftime("%d")
-      day = day.sub(/^0/, ' ') if day =~ /^0\d/
-      time.strftime("%b #{day} %H:%M:%S")
+      (@time || Time.now).strftime("%b %e %H:%M:%S")
     end
 
     if "".respond_to?(:bytesize)
